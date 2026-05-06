@@ -2,24 +2,29 @@
 
 Pacote completo da skill OpenClaw OS — cria agentes AI pessoais (claws) rodando 24/7 no VPS dos alunos.
 
-## Como instalar (aluno)
+## Instalacao rapida (1 comando)
 
-1. Descompacta este pacote em qualquer lugar
-2. Abre terminal na pasta `openclaw-os/`
-3. Roda:
+Cole no terminal:
 
 ```bash
-bash install.sh
+git clone https://github.com/torriani/openclaw-os.git ~/openclaw-os && bash ~/openclaw-os/install.sh
 ```
 
-4. Fecha e reabre o Claude Code
-5. Digita no prompt:
+Depois feche e reabra o Claude Code, e digite no prompt:
 
 ```
 /openclaw-os:start
 ```
 
 E segue o passo a passo guiado.
+
+## Instalacao manual (alternativa)
+
+1. Clone o repo: `git clone https://github.com/torriani/openclaw-os.git`
+2. Abre terminal na pasta `openclaw-os/`
+3. Roda: `bash install.sh`
+4. Fecha e reabre o Claude Code
+5. Digita: `/openclaw-os:start`
 
 ## Pre-requisitos do aluno
 
