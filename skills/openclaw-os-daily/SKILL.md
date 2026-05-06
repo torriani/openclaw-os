@@ -19,7 +19,6 @@ description: |
 
 ## Conteudo de referencia
 
-`legacy/squads/openclaw-manager/tasks/daily-ops.md` e `fleet-health.md` tem o detalhe.
 
 ## Fluxo
 

@@ -18,7 +18,6 @@ description: |
 
 ## Conteudo de referencia
 
-`legacy/squads/openclaw-creator/agents/skill-teacher.md` cobre criacao de skills + crons + heartbeat.
 
 ## Fluxo resumido
 

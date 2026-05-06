@@ -24,7 +24,6 @@ description: |
 
 ## Conteudo de referencia
 
-`legacy/squads/openclaw-manager/tasks/upgrade-existing-claw.md` tem o audit em 6 dimensoes + remediation pipeline. Le como referencia operacional.
 
 ## Fluxo resumido
 

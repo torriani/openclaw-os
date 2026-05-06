@@ -17,7 +17,6 @@ description: |
 
 ## Conteudo de referencia
 
-`legacy/squads/openclaw-creator/agents/guardian.md` cobre model split + immune system 5-layer.
 
 ## Fluxo resumido
 

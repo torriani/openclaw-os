@@ -101,4 +101,3 @@ Volte ao /openclaw-os:start e me diga "ok" pra avancar pra Phase 2.
 
 ## Origem
 
-Baseado em `legacy/squads/openclaw-manager/tasks/memory-extraction.md` e prompt em `~/coreaios/openclaw-os/templates/memory-extraction-prompt.md`.

@@ -52,4 +52,3 @@ description: |
 - Skill com mesmo nome ja existe → pergunta: substituir ou criar v2?
 
 ## Origem
-`legacy/squads/openclaw-manager/agents/skill-ops.md`
