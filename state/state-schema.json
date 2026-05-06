@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenClaw OS Pipeline State",
+  "type": "object",
+  "required": ["claw_name", "claw_slug", "current_phase", "phases_completed"],
+  "properties": {
+    "claw_name": {"type": "string", "description": "Nome amigavel do claw (ex: Alfred)"},
+    "claw_slug": {"type": "string", "pattern": "^[a-z0-9-]+$", "description": "Slug usado em paths e bot username"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "go_live_at": {"type": ["string", "null"], "format": "date-time"},
+    "go_live": {"type": "boolean", "default": false},
+    "current_phase": {"type": ["integer", "null"], "minimum": 1, "maximum": 7},
+    "phases_completed": {"type": "array", "items": {"type": "integer", "minimum": 1, "maximum": 7}},
+    "prerequisites": {
+      "type": "object",
+      "properties": {
+        "hostinger_vps": {"type": "boolean"},
+        "chatgpt_account": {"type": "boolean"},
+        "telegram_installed": {"type": "boolean"}
+      }
+    },
+    "vps": {
+      "type": "object",
+      "properties": {
+        "ip": {"type": ["string", "null"]},
+        "ssh_user": {"type": "string", "default": "root"},
+        "os": {"type": "string", "default": "ubuntu-24.04"}
+      }
+    },
+    "credentials": {
+      "type": "object",
+      "description": "NUNCA armazenar valores completos aqui. So ultimos 4-6 chars pra audit. Valores reais ficam em ~/.openclaw/{slug}/.env (chmod 600).",
+      "properties": {
+        "chatgpt_api_key": {"type": ["string", "null"]},
+        "telegram_bot_token": {"type": ["string", "null"]},
+        "telegram_chat_id": {"type": ["string", "null"]}
+      }
+    },
+    "memory_extracted": {"type": "boolean", "default": false},
+    "user_md_path": {"type": ["string", "null"]},
+    "identity_built": {"type": "boolean", "default": false},
+    "skills_installed": {"type": "array", "items": {"type": "string"}},
+    "upgraded_at": {"type": ["string", "null"], "format": "date-time"},
+    "errors": {
+      "type": "array",
+      "description": "Erros nao resolvidos durante o pipeline",
+      "items": {
+        "type": "object",
+        "properties": {
+          "phase": {"type": "integer"},
+          "timestamp": {"type": "string", "format": "date-time"},
+          "message": {"type": "string"}
+        }
+      }
+    }
+  }
+}

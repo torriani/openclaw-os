@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw OS — Manual de Uso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ════════════════════════════════════════
+     DESIGN SYSTEM — OKLCH (Course Builder DS)
+     Fonte: legacy/playbook/src/app/globals.css
+     ════════════════════════════════════════ */
+  :root {
+    --hue-primary: 215;
+
+    /* Neutros (ink scale 12 steps) */
+    --ink-0:  oklch(0.09 0.003 260);
+    --ink-1:  oklch(0.12 0.003 260);
+    --ink-2:  oklch(0.15 0.004 260);
+    --ink-3:  oklch(0.18 0.004 260);
+    --ink-4:  oklch(0.22 0.005 260);
+    --ink-5:  oklch(0.28 0.005 260);
+    --ink-6:  oklch(0.38 0.006 260);
+    --ink-7:  oklch(0.50 0.006 260);
+    --ink-8:  oklch(0.65 0.005 260);
+    --ink-9:  oklch(0.80 0.004 260);
+    --ink-10: oklch(0.92 0.003 260);
+    --ink-11: oklch(0.98 0.002 260);
+
+    /* Accent primario */
+    --accent:      oklch(0.80 0.14 var(--hue-primary));
+    --accent-ink:  oklch(0.18 0.04 var(--hue-primary));
+    --accent-bg:   oklch(0.22 0.05 var(--hue-primary) / 0.6);
+    --accent-soft: oklch(0.28 0.07 var(--hue-primary));
+
+    /* Categoricas */
+    --cat-cyan:    oklch(0.80 0.13 215);
+    --cat-lime:    oklch(0.88 0.19 135);
+    --cat-magenta: oklch(0.72 0.22 350);
+    --cat-violet:  oklch(0.72 0.17 295);
+    --cat-blue:    oklch(0.74 0.14 255);
+    --cat-teal:    oklch(0.80 0.13 185);
+    --cat-coral:   oklch(0.75 0.16 25);
+
+    --cat-cyan-bg:    oklch(0.22 0.05 215 / 0.6);
+    --cat-lime-bg:    oklch(0.22 0.05 135 / 0.6);
+    --cat-magenta-bg: oklch(0.22 0.05 350 / 0.6);
+    --cat-violet-bg:  oklch(0.22 0.05 295 / 0.6);
+    --cat-coral-bg:   oklch(0.22 0.05 25  / 0.6);
+
+    /* Semanticos */
+    --ok:     var(--cat-lime);
+    --warn:   var(--cat-magenta);
+    --danger: var(--cat-coral);
+    --info:   var(--cat-cyan);
+
+    /* Tipografia */
+    --font-display: 'Inter Tight', 'Helvetica Neue', sans-serif;
+    --font-body:    'Inter', 'Helvetica Neue', sans-serif;
+    --font-serif:   'Instrument Serif', Georgia, serif;
+    --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    /* Espacamento (base 4px) */
+    --sp-1:  4px;  --sp-2:  8px;  --sp-3:  12px; --sp-4:  16px;
+    --sp-5:  20px; --sp-6:  24px; --sp-8:  32px; --sp-10: 40px;
+    --sp-12: 48px; --sp-16: 64px; --sp-20: 80px;
+
+    /* Raios */
+    --r-xs: 4px; --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-2xl: 28px; --r-full: 999px;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 12px rgb(0 0 0 / 0.5), 0 1px 3px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.35);
+    --shadow-glow: 0 0 32px -4px oklch(0.80 0.14 var(--hue-primary) / 0.3);
+
+    /* Borders */
+    --border-subtle:  oklch(0.98 0 0 / 0.08);
+    --border-default: oklch(0.98 0 0 / 0.12);
+    --border-accent:  oklch(0.80 0.14 var(--hue-primary) / 0.3);
+
+    --transition-fast: 150ms ease;
+    --transition-base: 200ms ease;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink-1);
+    color: var(--ink-9);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+    padding: var(--sp-12) var(--sp-6);
+  }
+
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  header.hero {
+    margin-bottom: var(--sp-16);
+    padding-bottom: var(--sp-8);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: var(--sp-3);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink-11);
+    margin-bottom: var(--sp-4);
+  }
+  h1 .accent { color: var(--accent); }
+  .hero-meta {
+    display: flex;
+    gap: var(--sp-6);
+    font-size: 13px;
+    color: var(--ink-7);
+    font-family: var(--font-mono);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: var(--sp-2); }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 8px var(--ok);
+  }
+
+  /* ── Headings ── */
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink-11);
+    margin-top: var(--sp-16);
+    margin-bottom: var(--sp-5);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+  h2::before {
+    content: counter(h2-counter, decimal-leading-zero);
+    counter-increment: h2-counter;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 4px 10px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border-accent);
+  }
+  body { counter-reset: h2-counter; }
+
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--ink-11);
+    margin-top: var(--sp-8);
+    margin-bottom: var(--sp-3);
+  }
+  h4 {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-7);
+    margin-top: var(--sp-5);
+    margin-bottom: var(--sp-2);
+  }
+
+  p { margin-bottom: var(--sp-4); color: var(--ink-9); }
+  p strong { color: var(--ink-11); font-weight: 600; }
+
+  ul, ol { margin-left: var(--sp-6); margin-bottom: var(--sp-4); }
+  li { margin-bottom: var(--sp-2); color: var(--ink-9); }
+  li::marker { color: var(--accent); }
+
+  a { color: var(--accent); text-decoration: none; transition: color var(--transition-fast); }
+  a:hover { color: var(--ink-11); }
+
+  /* ── Code ── */
+  code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background: var(--ink-3);
+    color: var(--cat-cyan);
+    padding: 2px 8px;
+    border-radius: var(--r-xs);
+    border: 1px solid var(--border-subtle);
+  }
+  pre {
+    background: var(--ink-0);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    padding: var(--sp-5) var(--sp-6);
+    overflow-x: auto;
+    margin: var(--sp-3) 0 var(--sp-5);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    box-shadow: var(--shadow-sm);
+  }
+  pre code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--ink-10);
+  }
+  pre .cmd { color: var(--accent); font-weight: 600; }
+  pre .comment { color: var(--ink-6); font-style: italic; }
+  pre .key { color: var(--cat-magenta); }
+  pre .str { color: var(--cat-lime); }
+
+  /* ── Callouts ── */
+  .callout {
+    border-radius: var(--r-md);
+    padding: var(--sp-5) var(--sp-6);
+    margin: var(--sp-5) 0;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-bg);
+    border-top: 1px solid var(--border-default);
+    border-right: 1px solid var(--border-default);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .callout.tip    { border-left-color: var(--ok);     background: oklch(0.22 0.05 135 / 0.4); }
+  .callout.warn   { border-left-color: var(--warn);   background: oklch(0.22 0.05 350 / 0.4); }
+  .callout.danger { border-left-color: var(--danger); background: oklch(0.22 0.05 25 / 0.4); }
+  .callout strong {
+    display: block;
+    margin-bottom: var(--sp-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-11);
+  }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── Table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--sp-4) 0 var(--sp-6);
+    background: var(--ink-2);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    border: 1px solid var(--border-default);
+  }
+  th, td {
+    padding: var(--sp-3) var(--sp-5);
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 14px;
+  }
+  th {
+    background: var(--ink-3);
+    color: var(--ink-11);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--ink-3); }
+  td code { font-size: 12px; }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--r-full);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid;
+  }
+  .badge.ok    { background: oklch(0.22 0.05 135 / 0.4); color: var(--ok);     border-color: var(--ok); }
+  .badge.warn  { background: oklch(0.22 0.05 350 / 0.4); color: var(--warn);   border-color: var(--warn); }
+  .badge.info  { background: var(--cat-cyan-bg);          color: var(--cat-cyan); border-color: var(--cat-cyan); }
+  .badge.muted { background: var(--ink-3);                color: var(--ink-8);  border-color: var(--border-default); }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--ink-2);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    padding: var(--sp-6) var(--sp-8);
+    margin-bottom: var(--sp-12);
+  }
+  .toc h3 { margin-top: 0; margin-bottom: var(--sp-4); font-size: 17px; }
+  .toc ol { margin: 0; padding-left: var(--sp-5); }
+  .toc li { font-family: var(--font-mono); font-size: 13px; color: var(--ink-8); }
+  .toc a { color: var(--ink-9); }
+  .toc a:hover { color: var(--accent); }
+
+  /* ── Flowchart ASCII ── */
+  .flowchart {
+    background: var(--ink-0);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    padding: var(--sp-6) var(--sp-8);
+    margin: var(--sp-5) 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--ink-9);
+    white-space: pre;
+    overflow-x: auto;
+    box-shadow: var(--shadow-sm);
+  }
+  .flowchart .accent { color: var(--accent); font-weight: 600; }
+  .flowchart .step { color: var(--cat-cyan); }
+  .flowchart .check { color: var(--ok); }
+
+  /* ── Step cards ── */
+  .step-card {
+    background: var(--ink-2);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    padding: var(--sp-5) var(--sp-6);
+    margin: var(--sp-4) 0;
+    position: relative;
+    transition: border-color var(--transition-base);
+  }
+  .step-card:hover {
+    border-color: var(--border-accent);
+  }
+  .step-card::before {
+    content: attr(data-step);
+    position: absolute;
+    top: -10px;
+    left: var(--sp-5);
+    background: var(--ink-1);
+    color: var(--accent);
+    padding: 2px 10px;
+    border-radius: var(--r-sm);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--border-accent);
+  }
+  .step-card h4 { margin-top: 0; color: var(--ink-11); font-size: 14px; }
+  .step-card p { margin-bottom: 0; }
+  .step-card pre { margin: var(--sp-3) 0 0; }
+
+  /* ── Footer ── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: var(--sp-12) 0;
+  }
+  .footer {
+    margin-top: var(--sp-16);
+    padding-top: var(--sp-6);
+    border-top: 1px solid var(--border-subtle);
+    color: var(--ink-7);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.8;
+  }
+  .footer code { font-size: 11px; }
+
+  /* ── Quote / serif highlight ── */
+  .lead {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink-10);
+    font-style: italic;
+    margin: var(--sp-6) 0;
+    padding-left: var(--sp-5);
+    border-left: 2px solid var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header class="hero">
+  <div class="eyebrow">Manual · v1.0 · maio 2026</div>
+  <h1>OpenClaw <span class="accent">OS</span></h1>
+  <div class="hero-meta">
+    <span><span class="dot"></span> 16 skills instaladas</span>
+    <span>~/.claude/skills/openclaw-os*</span>
+    <span>pipeline 7 fases · ~90min</span>
+  </div>
+</header>
+
+<p class="lead">
+  Skill do Claude Code que cria e gerencia agentes AI pessoais (claws) rodando 24/7 no VPS dos seus alunos. Pipeline guiado de 7 fases, do zero ao Telegram funcionando.
+</p>
+
+<div class="toc">
+  <h3>Indice</h3>
+  <ol>
+    <li><a href="#tldr">TL;DR — só me dê o comando</a></li>
+    <li><a href="#como-funciona">Como a skill funciona</a></li>
+    <li><a href="#prerequisitos">Pré-requisitos do aluno</a></li>
+    <li><a href="#fluxo-padrao">Fluxo padrão (caminho feliz)</a></li>
+    <li><a href="#comandos">Todos os comandos explicados</a></li>
+    <li><a href="#fases">As 7 fases em detalhe</a></li>
+    <li><a href="#cenarios">Cenários comuns</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#arquitetura">Arquitetura</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ol>
+</div>
+
+<h2 id="tldr">TL;DR — só me dê o comando</h2>
+
+<p>Pra criar um claw novo do zero, abre o Claude Code e digita:</p>
+
+<pre><span class="cmd">/openclaw-os:start</span></pre>
+
+<p>Pronto. A skill assume, faz as 7 perguntas/checks que precisa, e te conduz até o claw rodando no Telegram. Tempo total: <strong>~90 minutos</strong> se for primeira vez.</p>
+
+<div class="callout tip">
+  <strong>Resposta direta à sua dúvida</strong>
+  <p>Sim — <code>/openclaw-os:start</code> chama as 7 fases automaticamente em sequência. Você não precisa decorar mais nenhum comando. Só esse.</p>
+</div>
+
+<h2 id="como-funciona">Como a skill funciona</h2>
+
+<p>A skill funciona como uma <strong>recepcionista que te guia por um prédio</strong>. Cada andar do prédio é uma fase. Você nunca precisa saber qual elevador apertar — a recepcionista te leva.</p>
+
+<h3>Fluxo visual</h3>
+
+<div class="flowchart"><span class="accent">VOCÊ DIGITA: /openclaw-os:start</span>
+        │
+        ▼
+┌───────────────────────────┐
+│  <span class="accent">Skill principal (start)</span>  │  ← orquestrador
+└───────────────────────────┘
+        │
+        │ valida pré-requisitos (VPS, ChatGPT, Telegram)
+        │ pergunta nome do claw
+        │ cria state.json
+        │
+        ▼
+   <span class="step">PHASE 1</span> (memória)        → "rode /openclaw-os:phase-1"
+        │
+        │ você roda, ela executa, salva estado
+        │ você volta e digita "ok"
+        ▼
+   <span class="step">PHASE 2</span> (credenciais)    → "rode /openclaw-os:phase-2"
+        │
+        ▼
+   <span class="step">PHASE 3</span> (infra + sec)    → ...
+        │
+        ▼  ... segue até PHASE 7 ...
+        │
+        ▼
+   <span class="check">GO-LIVE ✓ claw no Telegram</span></div>
+
+<h3>O que cada peça faz</h3>
+
+<table>
+  <thead>
+    <tr><th>Peça</th><th>Papel</th><th>Você invoca?</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>/openclaw-os:start</code></td><td>Orquestrador — conduz tudo</td><td><span class="badge ok">Sim, sempre</span></td></tr>
+    <tr><td><code>:phase-1</code> a <code>:phase-7</code></td><td>Fases individuais</td><td><span class="badge info">Quando :start pedir</span></td></tr>
+    <tr><td><code>:resume</code></td><td>Retoma de onde parou</td><td><span class="badge info">Se interrompeu</span></td></tr>
+    <tr><td><code>:status</code></td><td>Health check</td><td><span class="badge info">Pós go-live</span></td></tr>
+    <tr><td><code>:help</code></td><td>Ajuda</td><td><span class="badge muted">Quando esquecer</span></td></tr>
+    <tr><td><code>state.json</code></td><td>Memória do pipeline</td><td><span class="badge muted">Não, automático</span></td></tr>
+  </tbody>
+</table>
+
+<div class="callout warn">
+  <strong>Por que não roda tudo automático?</strong>
+  <p>Cada fase pede confirmação humana porque algumas tarefas dependem do aluno (copiar prompt no ChatGPT, criar bot no @BotFather, colar IP do VPS). Sem o aluno, a skill não consegue avançar sozinha. O checkpoint é onde você verifica se a fase deu certo antes de seguir.</p>
+</div>
+
+<h2 id="prerequisitos">Pré-requisitos do aluno</h2>
+
+<p>Antes do aluno digitar <code>/openclaw-os:start</code>, ele precisa ter os 3 itens abaixo. Sem eles, a skill para na primeira tela.</p>
+
+<table>
+  <thead>
+    <tr><th>Item</th><th>Onde conseguir</th><th>Custo</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>VPS Hostinger</strong> (Ubuntu 24.04)</td>
+      <td><a href="https://hostinger.com.br">hostinger.com.br</a> → VPS KVM 1 ou 2</td>
+      <td>$5–10/mês</td>
+    </tr>
+    <tr>
+      <td><strong>Conta ChatGPT</strong> (Plus de preferência)</td>
+      <td><a href="https://chatgpt.com">chatgpt.com</a></td>
+      <td>$20/mês ou Free</td>
+    </tr>
+    <tr>
+      <td><strong>Telegram</strong> instalado</td>
+      <td>App Store / Play Store</td>
+      <td>Grátis</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout danger">
+  <strong>Atenção</strong>
+  <p>Esta versão usa <strong>ChatGPT (OpenAI)</strong>, não Anthropic. O aluno precisa de chave da OpenAI (<code>sk-...</code>), não da Anthropic.</p>
+</div>
+
+<h2 id="fluxo-padrao">Fluxo padrão (caminho feliz)</h2>
+
+<p>Esse é o roteiro completo do que acontece numa execução normal, do início ao fim.</p>
+
+<div class="step-card" data-step="01">
+  <h4>Aluno abre Claude Code e digita</h4>
+  <pre><span class="cmd">/openclaw-os:start</span></pre>
+  <p>A skill carrega e mostra a tela de boas-vindas + checklist dos 3 pré-requisitos.</p>
+</div>
+
+<div class="step-card" data-step="02">
+  <h4>Aluno confirma os 3 pré-requisitos</h4>
+  <p>Skill pergunta um por um. Se faltar algum, ela <strong>para</strong> e orienta como conseguir.</p>
+</div>
+
+<div class="step-card" data-step="03">
+  <h4>Aluno escolhe nome do claw</h4>
+  <p>Ex: "Alfred", "Sofia", "Zeus". A skill vira em slug: <code>alfred</code>.</p>
+</div>
+
+<div class="step-card" data-step="04">
+  <h4>Skill cria state.json e mostra roadmap</h4>
+  <pre>~/.openclaw/alfred/state.json   <span class="comment"># memória do pipeline</span>
+~/.openclaw/alfred/.env          <span class="comment"># credenciais (criado em phase-2)</span></pre>
+  <p>Mostra as 7 fases em ordem com tempo estimado.</p>
+</div>
+
+<div class="step-card" data-step="05">
+  <h4>Skill diz: "rode /openclaw-os:phase-1"</h4>
+  <p>Aluno digita <code>/openclaw-os:phase-1</code> no prompt. Carrega a skill da Phase 1, executa, atualiza <code>state.json</code>.</p>
+</div>
+
+<div class="step-card" data-step="06">
+  <h4>Aluno volta ao :start e diz "ok"</h4>
+  <p>Skill principal lê o <code>state.json</code>, vê que phase-1 está em <code>phases_completed</code>, libera phase-2.</p>
+</div>
+
+<div class="step-card" data-step="07">
+  <h4>Repete passos 5–6 para phases 2, 3, 4, 5, 6, 7</h4>
+  <p>A cada fase: skill pede o comando, aluno roda, volta, diz "ok", próxima fase libera.</p>
+</div>
+
+<div class="step-card" data-step="08">
+  <h4>Após Phase 7: GO-LIVE</h4>
+  <p>Skill marca <code>go_live: true</code>, mostra resumo final, pede pro aluno mandar "oi" no Telegram pra testar.</p>
+</div>
+
+<h2 id="comandos">Todos os comandos explicados</h2>
+
+<table>
+  <thead>
+    <tr><th>Comando</th><th>Quando usar</th><th>Tempo</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>/openclaw-os</code></td><td>Mostra menu com todos os subcomandos</td><td>10s</td></tr>
+    <tr><td><code>/openclaw-os:start</code></td><td><strong>Comando principal.</strong> Começa do zero. Conduz as 7 fases.</td><td>~90min</td></tr>
+    <tr><td><code>/openclaw-os:resume</code></td><td>Você parou no meio do pipeline e quer continuar</td><td>varia</td></tr>
+    <tr><td><code>/openclaw-os:status</code></td><td>Health check rápido de claw já no ar</td><td>30s</td></tr>
+    <tr><td><code>/openclaw-os:upgrade</code></td><td>Audita e atualiza claw existente (brownfield)</td><td>30–60min</td></tr>
+    <tr><td><code>/openclaw-os:daily</code></td><td>Operações diárias multi-claw (se gerencia vários)</td><td>5–10min</td></tr>
+    <tr><td><code>/openclaw-os:add-skill</code></td><td>Adiciona skill nova a um claw já no ar</td><td>15–30min</td></tr>
+    <tr><td><code>/openclaw-os:extract-memory</code></td><td>Re-extrai perfil do aluno (se mudou de fase de vida)</td><td>10min</td></tr>
+    <tr><td><code>/openclaw-os:help</code></td><td>Ajuda detalhada com lista completa</td><td>30s</td></tr>
+    <tr><td><code>:phase-1</code> a <code>:phase-7</code></td><td>Rodar uma fase isolada (avançado)</td><td>10–20min cada</td></tr>
+  </tbody>
+</table>
+
+<div class="callout tip">
+  <strong>Regra de ouro</strong>
+  <p>90% do tempo você só usa <code>/openclaw-os:start</code>. Os outros comandos são pra situações específicas.</p>
+</div>
+
+<h2 id="fases">As 7 fases em detalhe</h2>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Fase</th><th>O que entrega</th><th>Tempo</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td><strong>Memory Extraction</strong></td><td>USER.md com perfil completo do aluno (extraído via ChatGPT)</td><td>10min</td></tr>
+    <tr><td>2</td><td><strong>Credentials</strong></td><td>.env com IP do VPS, ChatGPT API key, Telegram bot token + chat_id</td><td>10min</td></tr>
+    <tr><td>3</td><td><strong>Infra + Security 9-layer</strong></td><td>OpenClaw rodando + UFW, Fail2ban, SSH key-only, dmPolicy, audit log, systemd hardening</td><td>20min</td></tr>
+    <tr><td>4</td><td><strong>Identity + Memory 4-layer</strong></td><td>SOUL.md, IDENTITY.md, AGENTS.md, BOOT.md + memória working/episodic/semantic/procedural</td><td>15min</td></tr>
+    <tr><td>5</td><td><strong>Skills + Crons</strong></td><td>1+ skill instalada + cron heartbeat 5min + 1 cron proativo</td><td>15min</td></tr>
+    <tr><td>6</td><td><strong>Costs + Immune</strong></td><td>Model split (gpt-4o-mini default), rate limit, budget alert, watchdog, OOM guard, backup diário, audit semanal</td><td>10min</td></tr>
+    <tr><td>7</td><td><strong>Mission Control</strong></td><td>Health check 9 itens + smoke test Telegram + go_live=true</td><td>10min</td></tr>
+  </tbody>
+</table>
+
+<h3>Por que essa ordem importa</h3>
+
+<p>Cada fase é <strong>gate</strong> da próxima. Não dá pra pular:</p>
+
+<ul>
+  <li>Phase 2 (credenciais) precisa do USER.md de Phase 1 pra customizar</li>
+  <li>Phase 3 (infra) precisa das credenciais de Phase 2 pra logar no VPS</li>
+  <li>Phase 4 (identity) precisa da infra de Phase 3 pra rodar OpenClaw</li>
+  <li>Phase 5 (skills) precisa da identidade de Phase 4 pra fazer sentido</li>
+  <li>Phase 6 (immune) precisa de Phase 5 pra ter o que monitorar</li>
+  <li>Phase 7 (mission control) valida que tudo o resto passou</li>
+</ul>
+
+<h2 id="cenarios">Cenários comuns</h2>
+
+<h3>Cenário A — Aluno novo, do zero</h3>
+<pre><span class="cmd">/openclaw-os:start</span>
+<span class="comment"># segue o fluxo padrão. ~90min.</span></pre>
+
+<h3>Cenário B — Aluno parou no meio (foi dormir, fechou laptop)</h3>
+<pre><span class="cmd">/openclaw-os:resume</span>
+<span class="comment"># skill detecta state.json, mostra de onde retomar</span></pre>
+
+<h3>Cenário C — Aluno já tem claw rodando, quer atualizar</h3>
+<pre><span class="cmd">/openclaw-os:upgrade</span>
+<span class="comment"># audita 6 dimensões, mostra gaps, remedia</span></pre>
+
+<h3>Cenário D — Você gerencia 5 alunos e quer overview da fleet</h3>
+<pre><span class="cmd">/openclaw-os:daily</span>
+<span class="comment"># mostra status de todos os claws ativos</span></pre>
+
+<h3>Cenário E — Aluno quer adicionar skill nova (ex: agenda)</h3>
+<pre><span class="cmd">/openclaw-os:add-skill</span>
+<span class="comment"># pergunta nome, trigger, output. Cria no VPS. Smoke test.</span></pre>
+
+<h3>Cenário F — Algo deu errado, quer só checar saúde</h3>
+<pre><span class="cmd">/openclaw-os:status</span>
+<span class="comment"># 10 verificações em 30s</span></pre>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<table>
+  <thead>
+    <tr><th>Sintoma</th><th>Causa provável</th><th>Solução</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>SSH não conecta no VPS</td><td>IP errado, senha errada, ou VPS não está em Ubuntu 24.04</td><td>Confere no painel Hostinger. Re-roda phase-2.</td></tr>
+    <tr><td>ChatGPT API retorna 401</td><td>Chave inválida ou sem créditos</td><td>platform.openai.com/api-keys → nova chave + crédito</td></tr>
+    <tr><td>Telegram bot não responde</td><td>Token errado ou aluno não mandou "oi" pro bot</td><td>Re-roda phase-2 step Telegram</td></tr>
+    <tr><td>Skill <code>:start</code> não aparece</td><td>Claude Code precisa reiniciar pra ver skills novas</td><td>Fecha e abre Claude Code</td></tr>
+    <tr><td>state.json corrompido</td><td>Edição manual quebrou JSON</td><td>Apaga <code>~/.openclaw/{claw}/state.json</code>, recomeça com <code>:start</code></td></tr>
+    <tr><td>OpenClaw service crashou</td><td>OOM, dependência quebrada, ou config errada</td><td><code>:status</code> mostra logs. Watchdog reinicia em 60s.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="arquitetura">Arquitetura</h2>
+
+<h3>No seu computador</h3>
+
+<pre>~/.claude/skills/
+├── openclaw-os/                    <span class="comment"># entry point</span>
+├── openclaw-os-start/              <span class="comment"># /openclaw-os:start</span>
+├── openclaw-os-resume/
+├── openclaw-os-status/
+├── openclaw-os-upgrade/
+├── openclaw-os-daily/
+├── openclaw-os-add-skill/
+├── openclaw-os-extract-memory/
+├── openclaw-os-help/
+├── openclaw-os-phase-1/            <span class="comment"># Memory Extraction</span>
+├── openclaw-os-phase-2/            <span class="comment"># Credentials</span>
+├── openclaw-os-phase-3/            <span class="comment"># Infra + Security</span>
+├── openclaw-os-phase-4/            <span class="comment"># Identity + Memory</span>
+├── openclaw-os-phase-5/            <span class="comment"># Skills + Crons</span>
+├── openclaw-os-phase-6/            <span class="comment"># Costs + Immune</span>
+└── openclaw-os-phase-7/            <span class="comment"># Mission Control</span>
+
+~/coreaios/openclaw-os/
+├── MANUAL.html                     <span class="comment"># este arquivo</span>
+├── templates/                      <span class="comment"># SOUL, IDENTITY, USER, AGENTS, BOOT</span>
+├── checklists/                     <span class="comment"># gates de validação</span>
+└── state/state-schema.json         <span class="comment"># schema do state.json</span>
+
+~/.openclaw/{claw-slug}/            <span class="comment"># um diretório por claw criado</span>
+├── state.json                      <span class="comment"># memória do pipeline</span>
+├── .env                            <span class="comment"># credenciais (chmod 600)</span>
+└── identity/
+    ├── USER.md
+    ├── SOUL.md
+    └── ...</pre>
+
+<h3>No VPS do aluno (depois do go-live)</h3>
+
+<pre>/root/openclaw/                     <span class="comment"># instalação OpenClaw</span>
+├── identity/                       <span class="comment"># SOUL, IDENTITY, AGENTS, BOOT, USER</span>
+├── skills/{nome}/                  <span class="comment"># skills do claw</span>
+├── memory/
+│   ├── working/                    <span class="comment"># sessão atual</span>
+│   ├── episodic/                   <span class="comment"># eventos diários</span>
+│   ├── semantic/                   <span class="comment"># fatos persistentes</span>
+│   └── procedural/                 <span class="comment"># skills aprendidas</span>
+├── logs/
+└── heartbeat.log
+
+/etc/systemd/system/openclaw.service <span class="comment"># roda 24/7</span></pre>
+
+<h2 id="faq">FAQ</h2>
+
+<h3>Eu preciso decorar todos os comandos?</h3>
+<p><strong>Não.</strong> Só <code>/openclaw-os:start</code>. Os outros aparecem no autocomplete quando você digita <code>/openclaw-os:</code>.</p>
+
+<h3>Posso rodar pra 5 alunos ao mesmo tempo?</h3>
+<p><strong>Sim.</strong> Cada aluno roda <code>/openclaw-os:start</code> na sessão dele. Cada claw tem seu próprio diretório em <code>~/.openclaw/{slug}/</code>, isolado.</p>
+
+<h3>E se eu fechar o terminal no meio?</h3>
+<p>Tudo bem. Próxima vez é só <code>/openclaw-os:resume</code>. A skill lê o <code>state.json</code> e retoma da última fase salva.</p>
+
+<h3>Quanto custa por mês?</h3>
+<p>VPS Hostinger ~$5–10 + ChatGPT API ~$5–15 (com model split) = <strong>$10–25/mês por claw</strong>.</p>
+
+<h3>Os squads originais ainda existem?</h3>
+<p>Sim, em <code>squads/openclaw-creator/</code> e <code>squads/openclaw-manager/</code>. Não foram apagados — a skill OpenClaw OS é a versão fundida e usa templates dos dois.</p>
+
+<h3>Como aluno mostra o claw funcionando?</h3>
+<p>Roda <code>/openclaw-os:status {claw}</code> — dashboard com 10 checks verdes + uptime + gastos do mês.</p>
+
+<h3>Posso modificar a skill?</h3>
+<p>Pode. Os arquivos estão em <code>~/.claude/skills/openclaw-os-*</code>. Edita o <code>SKILL.md</code> de cada um. Reinicia Claude Code pra recarregar.</p>
+
+<h3>Como distribuir pros alunos?</h3>
+<p>Eles precisam ter as 16 skills no <code>~/.claude/skills/</code> deles. Você pode:</p>
+<ul>
+  <li><strong>Manual:</strong> zipa <code>~/.claude/skills/openclaw-os*</code> e manda</li>
+  <li><strong>Via skill-installer:</strong> empacota como skill instalável</li>
+  <li><strong>Via repo:</strong> aluno clona repo seu e copia pra <code>~/.claude/skills/</code></li>
+</ul>
+
+<div class="callout tip">
+  <strong>Onde tirar dúvida</strong>
+  <p>Roda <code>/openclaw-os:help</code> dentro do Claude Code pra ajuda contextual. Se a skill travar, abre uma sessão nova e roda <code>/openclaw-os:resume</code>.</p>
+</div>
+
+<div class="footer">
+  OpenClaw OS Manual · Juliano Torriani · Core AIOS · 2026<br>
+  Skill em <code>~/.claude/skills/openclaw-os*/</code> · Recursos em <code>~/coreaios/openclaw-os/</code><br>
+  Design System: Course Builder · OKLCH dark · Inter Tight + Inter + JetBrains Mono
+</div>
+
+</div>
+
+</body>
+</html>
