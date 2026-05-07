@@ -1,112 +1,82 @@
 ---
 name: openclaw-os
 description: |
-  OpenClaw OS — Sistema completo para criar agentes AI pessoais 24/7 no VPS dos seus alunos.
-  Pipeline guiado de 7 fases: memoria, credenciais, infra+seguranca, identidade, skills, custos+immune, mission control.
-  Pre-requisitos: VPS Hostinger, conta ChatGPT, Telegram. Use /openclaw-os:start para comecar do zero.
-  Subcomandos: start, provision, upgrade, daily, status, resume, add-skill, extract-memory, help.
+  OpenClaw OS — Skill completa pra construir agentes AI pessoais 24/7 no
+  Telegram. Segue a sequencia oficial do curso M2 (Core IA Mentoria) com 12
+  etapas em ordem: abertura, install, security, identity, memory, integrations,
+  proactivity, immune, use-cases, backup, troubleshoot, ssh. Para comecar,
+  digite /openclaw-os:setup que conduz tudo guiado.
 ---
 
 # OpenClaw OS
 
-Sistema unificado pra criar e gerenciar agentes AI pessoais (claws) rodando 24/7 em VPS.
+Skill completa pra construir e manter um agente AI pessoal rodando 24/7 no
+Telegram, no padrao do curso Core IA Mentoria (M2).
 
-## O que e um claw
+## Para comecar
 
-Um **claw** e um agente AI pessoal do aluno, rodando num VPS dele, conectado ao Telegram, com identidade propria, memoria persistente, skills proprias, e immune system.
+Digite no Claude Code:
+
+```
+/openclaw-os:setup
+```
+
+A skill `:setup` e o **orquestrador-mor**. Ela conduz voce do zero ate o
+agente funcionando, passando pelas 12 etapas em ordem.
 
 ## Subcomandos disponiveis
 
-Digite `/openclaw-os:` no prompt e o autocomplete mostra:
+Quando voce digita `/openclaw-os:` no prompt, o autocomplete mostra:
+
+### Comando principal
+
+| Comando | Funcao |
+|---|---|
+| `/openclaw-os:setup` | COMECE AQUI. Orquestra as 12 etapas em sequencia. |
+
+### As 12 etapas do curso (ordem oficial)
+
+| # | Comando | Etapa do curso | Tempo |
+|---|---|---|---|
+| 0 | `:abertura`     | Abertura (intro + 8 etapas)      | 18min |
+| 1 | `:install`      | Setup (OpenClaw na VPS)          | 55min |
+| 2 | `:security`     | Seguranca (5 frentes)            | 25min |
+| 3 | `:identity`     | Identidade (5 arquivos)          | 30min |
+| 4 | `:memory`       | Memoria (4 camadas)              | 40min |
+| 5 | `:integrations` | Integracoes (Calendar, Gmail)    | 30min |
+| 6 | `:proactivity`  | Proatividade (heartbeat, crons)  | 25min |
+| 7 | `:immune`       | Imunologico (watchdog, backup)   | 30min |
+| 8 | `:use-cases`    | Casos de uso (20+ exemplos)      | 20min |
+| 9 | `:backup`       | Backup (versionamento GitHub)    | 25min |
+| 10 | `:troubleshoot` | Resolvendo problemas             | ad-hoc |
+| 11 | `:ssh`          | Bonus: SSH com chave             | 10min |
+
+### Comandos de operacao
 
 | Comando | Quando usar |
 |---|---|
-| `/openclaw-os:start` | **COMECE AQUI**. Pipeline guiado completo do zero. Roda as 7 fases em sequencia. |
-| `/openclaw-os:resume` | Retoma pipeline interrompido (le state.json). |
-| `/openclaw-os:upgrade` | Atualiza claw existente (brownfield audit + remediate). |
-| `/openclaw-os:daily` | Operacoes diarias multi-claw (health check + sync). |
-| `/openclaw-os:status` | Health check rapido de um claw. |
-| `/openclaw-os:add-skill` | Adicionar skill nova ao claw. |
-| `/openclaw-os:extract-memory` | Extrair perfil do aluno via ChatGPT (gera USER.md). |
-| `/openclaw-os:help` | Lista comandos com descricao detalhada. |
+| `:resume`     | Retomar pipeline interrompido |
+| `:status`     | Health check rapido |
+| `:help`       | Ajuda detalhada |
 
-Subcomandos avancados (rodados pelo `:start` automaticamente, mas chamaveis isolados):
+## Pre-requisitos
 
-| Comando | Fase |
-|---|---|
-| `/openclaw-os:phase-1` | Memory Extraction (perfil do aluno) |
-| `/openclaw-os:phase-2` | Credentials Collection (VPS, ChatGPT, Telegram) |
-| `/openclaw-os:phase-3` | Infra + Security 9-layer hardening |
-| `/openclaw-os:phase-4` | Identity + Memory 4-layer system |
-| `/openclaw-os:phase-5` | Skills + Crons + Heartbeat |
-| `/openclaw-os:phase-6` | Costs + Immune System |
-| `/openclaw-os:phase-7` | Mission Control + Go-Live |
+1. ChatGPT Plus (~$20/mes)
+2. Telegram instalado
+3. VPS Hostinger KVM 2, Ubuntu 24.04 (~R$ 49/mes)
 
-## Pre-requisitos do aluno
+## Custos mensais
 
-Antes de rodar `/openclaw-os:start`, o aluno precisa ter:
+VPS Hostinger R$ 49 + ChatGPT Plus ~R$ 100 = ~R$ 150/mes total.
 
-1. **Conta Hostinger com VPS** (KVM 1 ou 2, Ubuntu 24.04 instalado)
-2. **Conta ChatGPT** (Plus de preferencia, pra extracao de perfil)
-3. **Telegram instalado** no celular
+## Tempo total
 
-## Como o pipeline funciona
+~5 horas, em 1-3 sessoes (pode parar e retomar com `:resume`).
 
-```
-START
-  |
-  v
-Phase 1: Memory Extraction      (10 min) — usa ChatGPT pra extrair perfil
-  |
-  v
-Phase 2: Credentials            (10 min) — coleta VPS, ChatGPT API, Telegram bot
-  |
-  v
-Phase 3: Infra + Security       (20 min) — instala OpenClaw + 9 camadas seguranca
-  |
-  v
-Phase 4: Identity + Memory      (15 min) — cria SOUL, USER, IDENTITY, AGENTS
-  |
-  v
-Phase 5: Skills + Crons         (15 min) — primeira skill + heartbeat
-  |
-  v
-Phase 6: Costs + Immune         (10 min) — model split + watchdog + backup
-  |
-  v
-Phase 7: Mission Control        (10 min) — health check final + checklist
-  |
-  v
-GO-LIVE (claw 24/7 rodando)
-```
+## Repo publico
 
-**Tempo total estimado:** 90 minutos por aluno.
+https://github.com/torriani/openclaw-os
 
-## Estado e retomada
+## Origem
 
-O pipeline salva estado em `~/.openclaw/{claw-name}/state.json` apos cada fase. Se o aluno fechar a sessao no meio, na proxima vez e so rodar `/openclaw-os:resume` que continua de onde parou.
-
-## Quando o aluno digita `/openclaw-os` (sem subcomando)
-
-Quando o usuario invocar esta skill sem subcomando, mostre este menu e pergunte qual quer rodar:
-
-```
-OpenClaw OS — escolha o que fazer:
-
-  1. /openclaw-os:start          (criar claw novo do zero)
-  2. /openclaw-os:resume         (continuar pipeline interrompido)
-  3. /openclaw-os:upgrade        (atualizar claw existente)
-  4. /openclaw-os:status         (health check)
-  5. /openclaw-os:daily          (operacoes diarias)
-  6. /openclaw-os:help           (ver detalhes de cada comando)
-
-Digite o numero ou o comando completo.
-```
-
-Apos a escolha, oriente o usuario a digitar o comando `/openclaw-os:NOME` correspondente. NAO execute o subcomando voce mesmo: o usuario precisa invoca-lo pelo prompt para a skill correta carregar.
-
-## Arquitetura interna
-
-A skill OpenClaw OS e standalone (nao depende de squads). Templates ficam em `~/coreaios/openclaw-os/templates/`, checklists em `~/coreaios/openclaw-os/checklists/`, estado em `~/.openclaw/{claw-name}/state.json`.
-
-Origem: fusao dos squads `openclaw-creator` (9 fases setup + security + immune) e `openclaw-manager` (memory extraction + credentials + brownfield + fleet ops). Squads originais ficam arquivados em `squads/_archive/`.
+Curso Core IA Mentoria · M2 · Construindo Seu Primeiro Agente.

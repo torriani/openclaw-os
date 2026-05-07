@@ -1,90 +1,74 @@
 ---
 name: openclaw-os:help
 description: |
-  Lista todos os comandos da skill OpenClaw OS com descricao detalhada,
-  pre-requisitos, e quando usar cada um.
+  Lista detalhada dos 16 comandos da skill OpenClaw OS, com tempo estimado,
+  pre-requisitos, e quando usar cada um. Util quando esquecer qual etapa
+  rodar a seguir.
 ---
 
 # OpenClaw OS — Help
 
-Mostre EXATAMENTE este texto quando invocado:
+Mostra exatamente isto:
 
 ```
 ========================================
   OPENCLAW OS — COMANDOS DISPONIVEIS
 ========================================
 
-PIPELINE PRINCIPAL (ordem natural)
+PARA COMECAR
 
-  /openclaw-os:start
-    → Comeca pipeline do zero (7 fases, ~90min)
-    → Use isto pra criar claw novo
+  /openclaw-os:setup
+  → Orquestrador-mor. Conduz as 12 etapas em ordem (~5h total).
+    USE ISTO. Nao precisa decorar mais nenhum comando.
 
-  /openclaw-os:resume
-    → Retoma pipeline interrompido
-    → Use se voce parou no meio e quer continuar
+ETAPAS DO CURSO M2 (ordem oficial)
+
+  /openclaw-os:abertura       Abertura · 18min
+  /openclaw-os:install        Etapa 1: Setup · 55min
+  /openclaw-os:security       Etapa 2: Seguranca · 25min
+  /openclaw-os:identity       Etapa 3: Identidade · 30min
+  /openclaw-os:memory         Etapa 4: Memoria · 40min
+  /openclaw-os:integrations   Etapa 5: Integracoes · 30min
+  /openclaw-os:proactivity    Etapa 6: Proatividade · 25min
+  /openclaw-os:immune         Etapa 7: Imunologico · 30min
+  /openclaw-os:use-cases      Etapa 8: Casos de uso · 20min
+  /openclaw-os:backup         Etapa 9: Backup GitHub · 25min
+  /openclaw-os:troubleshoot   Etapa 10: Problemas · ad-hoc
+  /openclaw-os:ssh            Etapa 11: SSH com chave · 10min
 
 OPERACAO DIA A DIA
 
-  /openclaw-os:status
-    → Health check rapido (10 verificacoes em 30s)
-    → Use pra confirmar que claw ta saudavel
+  /openclaw-os:resume         Retomar de onde parou
+  /openclaw-os:status         Health check rapido
+  /openclaw-os:help           Esta ajuda
 
-  /openclaw-os:daily
-    → Operacoes diarias multi-claw
-    → Use uma vez por semana pra fleet inteira
+PRE-REQUISITOS
 
-  /openclaw-os:add-skill
-    → Adicionar skill nova ao claw existente
-    → Use quando quiser ensinar nova capacidade
+  - ChatGPT Plus (~$20/mes)
+  - Telegram instalado
+  - VPS Hostinger KVM 2, Ubuntu 24.04 (~R$ 49/mes)
 
-GERENCIAR CLAW EXISTENTE
+CUSTOS MENSAIS
 
-  /openclaw-os:upgrade
-    → Brownfield audit + remediate
-    → Use se claw foi criado fora do pipeline ou ta desatualizado
+  VPS Hostinger:  R$ 49/mes
+  ChatGPT Plus:   ~R$ 100/mes
+  Total:          ~R$ 150/mes
 
-  /openclaw-os:extract-memory
-    → Re-extrair perfil do aluno (USER.md)
-    → Use se perfil mudou bastante (mudou de empresa, foco, etc)
+REPO PUBLICO
 
-FASES INDIVIDUAIS (avancado)
-
-  /openclaw-os:phase-1   Memory Extraction (10min)
-  /openclaw-os:phase-2   Credentials (10min)
-  /openclaw-os:phase-3   Infra + Security 9-layer (20min)
-  /openclaw-os:phase-4   Identity + Memory 4-layer (15min)
-  /openclaw-os:phase-5   Skills + Crons + Heartbeat (15min)
-  /openclaw-os:phase-6   Costs + Immune System (10min)
-  /openclaw-os:phase-7   Mission Control + Go-Live (10min)
-
-  → Use se precisar refazer 1 fase isolada
-  → /openclaw-os:start chama estas em sequencia automaticamente
-
-PRE-REQUISITOS DO ALUNO
-
-  1. VPS Hostinger (Ubuntu 24.04)
-  2. Conta ChatGPT (Plus recomendado)
-  3. Telegram instalado
-
-CUSTOS MENSAIS ESTIMADOS
-
-  VPS:          $5-10
-  ChatGPT API:  $5-15 (com model split)
-  Total:        $10-25
+  https://github.com/torriani/openclaw-os
 
 DUVIDAS COMUNS
 
   Q: Quanto tempo total?
-  A: 90min se primeira vez, 30min se ja conhece.
+  A: ~5h. Pode parar e retomar com /openclaw-os:resume.
 
-  Q: Posso parar no meio?
-  A: Sim. Use /openclaw-os:resume pra retomar.
+  Q: Posso pular etapa?
+  A: Nao. Cada etapa e gate da proxima.
 
-  Q: Como faco com 5 alunos ao mesmo tempo?
-  A: Cada aluno roda /openclaw-os:start na sessao dele.
-     state.json fica em ~/.openclaw/{nome-do-claw}/, separado.
+  Q: Onde fica meu state.json?
+  A: ~/.openclaw/{claw-slug}/state.json
 
-  Q: Onde ficam credenciais?
-  A: ~/.openclaw/{claw}/.env (chmod 600, nunca vai pra Git)
+  Q: Esqueci qual etapa estava?
+  A: Roda /openclaw-os:resume — le o state.json e mostra.
 ```
