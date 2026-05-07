@@ -1,6 +1,8 @@
 # OpenClaw OS
 
-Pacote completo da skill OpenClaw OS — cria agentes AI pessoais (claws) rodando 24/7 no VPS dos alunos.
+Pacote completo da skill OpenClaw OS — guia o aluno do zero ate o agente AI
+pessoal rodando 24/7 no Telegram, seguindo a sequencia oficial do curso M2
+(Core IA Mentoria).
 
 ## Instalacao rapida (1 comando)
 
@@ -10,76 +12,95 @@ Cole no terminal:
 git clone https://github.com/torriani/openclaw-os.git ~/openclaw-os && bash ~/openclaw-os/install.sh
 ```
 
-Depois feche e reabra o Claude Code, e digite no prompt:
+Reinicia o Claude Code e digita:
 
 ```
-/openclaw-os:start
+/openclaw-os:setup
 ```
 
 E segue o passo a passo guiado.
 
-## Instalacao manual (alternativa)
+## Atualizacao (quem ja clonou)
 
-1. Clone o repo: `git clone https://github.com/torriani/openclaw-os.git`
-2. Abre terminal na pasta `openclaw-os/`
-3. Roda: `bash install.sh`
-4. Fecha e reabre o Claude Code
-5. Digita: `/openclaw-os:start`
+```bash
+cd ~/openclaw-os && git pull && rm -rf ~/.claude/skills/openclaw-os* && bash install.sh
+```
+
+## Skills disponiveis (17 no total)
+
+### Comando principal
+
+| Comando | Funcao |
+|---|---|
+| `/openclaw-os:setup` | **COMECE AQUI**. Orquestra as 12 etapas em ordem. |
+
+### As 12 etapas (ordem do curso M2)
+
+| # | Comando | Etapa do curso | Tempo |
+|---|---|---|---|
+| 0 | `:abertura`     | Abertura (intro + 8 etapas)              | 18min |
+| 1 | `:install`      | Setup (OpenClaw na VPS, 11 passos)       | 55min |
+| 2 | `:security`     | Seguranca (5 frentes + audit)            | 25min |
+| 3 | `:identity`     | Identidade (5 arquivos + ChatGPT)        | 30min |
+| 4 | `:memory`       | Memoria (4 camadas + extract rule)       | 40min |
+| 5 | `:integrations` | Integracoes (Calendar, Gmail, crons)     | 30min |
+| 6 | `:proactivity`  | Proatividade (heartbeat + automacoes)    | 25min |
+| 7 | `:immune`       | Imunologico (watchdog + audit semanal)   | 30min |
+| 8 | `:use-cases`    | 20+ casos de uso prontos                 | 20min |
+| 9 | `:backup`       | Backup automatico via GitHub             | 25min |
+| 10 | `:troubleshoot` | Diagnostico de 10 problemas comuns       | ad-hoc |
+| 11 | `:ssh`          | Bonus SSH com chave + alias `vps`        | 10min |
+
+### Comandos de operacao
+
+| Comando | Quando usar |
+|---|---|
+| `:resume`     | Retomar pipeline interrompido |
+| `:status`     | Health check rapido |
+| `:help`       | Ajuda detalhada |
 
 ## Pre-requisitos do aluno
 
-- VPS Hostinger com Ubuntu 24.04 (KVM 1 ou 2)
-- Conta ChatGPT (Plus recomendado)
-- Telegram instalado no celular
+1. **ChatGPT Plus** (~$20/mes)
+2. **Telegram** instalado
+3. **VPS Hostinger** KVM 2, Ubuntu 24.04 (~R$ 49/mes)
 
-## O que tem dentro
+## Custos mensais
+
+- VPS Hostinger: R$ 49/mes
+- ChatGPT Plus: ~R$ 100/mes
+- **Total: ~R$ 150/mes**
+
+## Tempo total
+
+~5 horas, em 1-3 sessoes (pode parar e retomar com `/openclaw-os:resume`).
+
+## Estrutura do pacote
 
 ```
 openclaw-os/
 ├── install.sh              ← instalador (bash install.sh)
 ├── README.md               ← este arquivo
 ├── MANUAL.html             ← manual completo (abre no navegador)
-├── skills/                 ← as 16 skills (copiadas pra ~/.claude/skills/)
-│   ├── openclaw-os/
-│   ├── openclaw-os-start/
-│   ├── openclaw-os-resume/
-│   ├── openclaw-os-help/
-│   ├── openclaw-os-status/
-│   ├── openclaw-os-upgrade/
-│   ├── openclaw-os-daily/
-│   ├── openclaw-os-add-skill/
-│   ├── openclaw-os-extract-memory/
-│   └── openclaw-os-phase-1/ ... openclaw-os-phase-7/
-├── templates/              ← BOOT, AGENTS, IDENTITY, USER, SOUL, memory-extraction-prompt
+├── skills/                 ← 17 skills (copiadas pra ~/.claude/skills/)
+├── templates/              ← USER, SOUL, AGENTS, IDENTITY, BOOT, memory-extraction-prompt
 ├── checklists/             ← gates de validacao
-└── state/                  ← state-schema.json
+├── state/                  ← state-schema.json
+└── aulas/                  ← drafts pro agente que monta o curso
 ```
 
-## Comandos disponiveis (depois de instalar)
+## Conteudo baseado em
 
-| Comando | Quando usar |
-|---|---|
-| `/openclaw-os:start` | **COMECE AQUI**. Pipeline 7 fases do zero. |
-| `/openclaw-os:resume` | Retoma pipeline interrompido. |
-| `/openclaw-os:status` | Health check rapido. |
-| `/openclaw-os:upgrade` | Atualiza claw existente. |
-| `/openclaw-os:help` | Lista comandos detalhada. |
-
-90% do tempo voce so usa `/openclaw-os:start`. As 7 fases rodam em sequencia automaticamente.
-
-## Manual completo
-
-Abra `MANUAL.html` no navegador pra detalhes de cada fase, troubleshooting, FAQ.
-
-## Custos mensais por claw
-
-- VPS Hostinger: $5–10
-- ChatGPT API: $5–15 (com model split)
-- Total: **$10–25/mes**
+- Curso Core IA Mentoria — M2 (Construindo Seu Primeiro Agente)
+- Squad openclaw-creator (5 agents, 6.305 linhas: infra-installer,
+  identity-builder, skill-teacher, guardian, setup-chief)
+- Squad openclaw-manager (4 agents + 7 tasks + templates + outputs)
 
 ## Suporte
 
-Em caso de problema, consulta a secao **Troubleshooting** do MANUAL.html.
+- Manual completo: abra `MANUAL.html` no navegador
+- Problemas: `/openclaw-os:troubleshoot` no Claude Code
+- Issues: github.com/torriani/openclaw-os/issues
 
 ---
 
