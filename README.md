@@ -26,7 +26,13 @@ E segue o passo a passo guiado.
 cd ~/openclaw-os && git pull && rm -rf ~/.claude/skills/openclaw-os* && bash install.sh
 ```
 
-## Skills disponiveis (17 no total)
+## Skills disponiveis (18 no total)
+
+### Pre-requisito (opcional, antes da Etapa 1)
+
+| Comando | Funcao |
+|---|---|
+| `/vps-setup` | Prepara a VPS Ubuntu: apt update, Node 20 LTS, npm, Claude Code instalado e autenticado. Roda **dentro da VPS via SSH**. Use se a VPS ainda nao tem Claude Code instalado. |
 
 ### Comando principal
 
