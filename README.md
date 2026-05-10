@@ -32,7 +32,7 @@ cd ~/openclaw-os && git pull && rm -rf ~/.claude/skills/openclaw-os* && bash ins
 
 | Comando | Funcao |
 |---|---|
-| `/vps-setup` | Prepara a VPS Ubuntu: apt update, Node 20 LTS, npm, Claude Code instalado e autenticado. Roda **dentro da VPS via SSH**. Use se a VPS ainda nao tem Claude Code instalado. |
+| `/vps-setup` | Prepara a VPS Ubuntu: apt update, Node 20 LTS, npm, Claude Code instalado e autenticado. Roda **dentro da VPS via SSH**. Use se a VPS ainda nao tem Claude Code instalado. Guia passo a passo: [docs/instalar-vps-setup.md](docs/instalar-vps-setup.md). |
 
 ### Comando principal
 
